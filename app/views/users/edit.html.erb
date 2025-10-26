@@ -1,0 +1,57 @@
+<%# <form action="/users" accept-charset="UTF-8" method="post" data-turbo="false"> %>
+  <%# <input type="hidden" name="authenticity_token" value="< %= form_authenticity_token"> % > %>
+
+  <%# <label for="user_username">Username:</label> %>
+  <%# <input type="text" name="user[username]" id="user_username" required> %>
+
+  <%# <label for="user_email">Email:</label> %>
+  <%# <input type="email" name="user[email]" id="user_email" required> %>
+
+  <%# <label for="user_email_confirmation">Confirm Email:</label> %>
+  <%# <input type="email" name="user[email_confirmation]" id="user_email_confirmation" required> %>
+
+  <%# <label for="user_password">Password (6-20 chars):</label> %>
+  <%# <input type="password" name="user[password]" id="user_password" minlength="6" maxlength="20" required> %>
+
+  <%# <label for="user_password_confirmation">Confirm Password:</label> %>
+  <%# <input type="password" name="user[password_confirmation]" id="user_password_confirmation" required> %>
+
+  <%# <input type="submit" name="commit" value="Submit Form"> %>
+<%# </form> %>
+
+<%= form_with model: @user do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+
+      <h2><%= pluralize(@user.errors.count, 'error') %> you can not save this user:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :username, value: "Your user name here:" %>
+    <%= form.text_field :username, value: @user.username %>
+  </div>
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email, placeholder: "example@example.com"  %>
+  </div>
+  <div>
+    <%= form.label :email_confirmation %>
+    <%= form.email_field :email_confirmation, placeholder: "example@example.com" %>
+  </div>
+  <div>
+    <%= form.label :password %>
+    <%= form.password_field :password, in: 6..20 %>
+  </div>
+  <div>
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, in: 6..20 %>
+  </div>
+  <%= form.button "Update" %>
+<% end %>
